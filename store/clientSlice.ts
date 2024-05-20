@@ -122,7 +122,7 @@ const clientSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.client = action.payload.client;
+        state.client = action.payload;
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.loading = false;

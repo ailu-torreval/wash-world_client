@@ -72,23 +72,28 @@ function AppContent() {
   const dispatch = useDispatch<AppDispatch>();
 
   console.log("jdjddko");
-  useEffect(() => {
-    LogBox.ignoreLogs([
-      "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
-    ]);
-    async function readFromSecureStore() {
-      const token = await SecureStore.getItemAsync("token");
-      if (token) {
-        await dispatch(setToken(token));
-        await dispatch(getProfile(token));
-        client.role === Role.Admin && setIsAdmin(true);
-        setIsLogged(true);
-        console.log(token);
-        console.log(client);
-      }
+useEffect(() => {
+  LogBox.ignoreLogs([
+    "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
+  ]);
+  async function readFromSecureStore() {
+    const token = await SecureStore.getItemAsync("token");
+    if (token) {
+      await dispatch(setToken(token));
+      await dispatch(getProfile(token));
     }
-    readFromSecureStore();
-  }, []);
+  }
+  console.log(client)
+  readFromSecureStore();
+}, []);
+
+useEffect(() => {
+  if (client && client.role === Role.Admin) {
+    setIsAdmin(true);
+  }
+  console.log(client)
+  setIsLogged(true);
+}, [client]);
 
   return (
     <NavigationContainer
