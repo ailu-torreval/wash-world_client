@@ -1,66 +1,28 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, Appearance } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { View, Text, Image } from "react-native";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
-import { Button, useTheme, useThemeMode } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StyleSheet } from "react-native";
+import { RootStackParamList } from "../App";
+const logo = require("../assets/logo.png");
 
-export type LoginStackParamList = {
-  main: undefined;
-  login: undefined;
-  signup: undefined;
-};
+type Props = NativeStackScreenProps<RootStackParamList, "main">;
 
-const LoginStack = createNativeStackNavigator<LoginStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const LoginNavigation: React.FC = () => {
-  const { theme } = useTheme();
-
-  return (
-    <NavigationContainer
-      theme={{
-        colors: {
-          primary: theme.colors.primary,
-          background: theme.colors.background,
-          card: theme.colors.white,
-          text: theme.colors.black,
-          border: "",
-          notification: "",
-        },
-        dark: theme.mode === "dark",
-      }}
-    >
-      <LoginStack.Navigator>
-        <LoginStack.Screen
-          name="main"
-          component={MainScreen}
-          options={{ headerShown: false }}
-        />
-        <LoginStack.Screen
-          name="login"
-          component={LoginScreen}
-          options={{ headerTitle: "" }}
-        />
-        <LoginStack.Screen
-          name="signup"
-          component={SignupScreen}
-          options={{ headerTitle: "" }}
-        />
-      </LoginStack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-export default LoginNavigation;
-
-type Props = NativeStackScreenProps<LoginStackParamList, "main">;
 
 const MainScreen: React.FC<Props> = ({ navigation }) => {
+  console.log("MAINI")
   return (
-    <View>
-      <Text>LOGIN</Text>
+    <View style={styles.container}>
+      <Image
+        source={logo}
+        style={{ width: "50%", alignSelf: "center" }}
+        resizeMode="contain"
+      />
       <Button
         title="Login"
         size="lg"
@@ -75,3 +37,44 @@ const MainScreen: React.FC<Props> = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingRight: 10,
+    paddingLeft: 10,
+  },
+});
+
+
+
+const LoginNavigation: React.FC<{ setIsLogged: (isLogged: boolean) => void , setIsAdmin: (isAdmin: boolean) => void }> = ({ setIsLogged, setIsAdmin }) => {
+  console.log("login")
+  return (
+    <Stack.Navigator initialRouteName="main">
+      <Stack.Screen
+        name="main"
+        component={MainScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="login"
+        options={{ headerTitle: "" }}
+      >
+              {props => <LoginScreen {...props} setIsLogged={setIsLogged}  setIsAdmin={setIsAdmin}  />}
+              </Stack.Screen>
+              <Stack.Screen
+        name="signup"
+        options={{ headerTitle: "" }}
+      >
+              {props => <SignupScreen {...props} setIsLogged={setIsLogged}  setIsAdmin={setIsAdmin}  />}
+              </Stack.Screen>
+
+    </Stack.Navigator>
+  );
+};
+
+export default LoginNavigation;
+
+

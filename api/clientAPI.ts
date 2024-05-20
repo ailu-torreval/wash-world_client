@@ -15,7 +15,7 @@ export class ClientAPI extends SuperQueries {
       const response = await this.getProfile(token.data);
       return {client: response, token: token.data};
     } catch (error) {
-      console.error("error login", error);
+      console.log(error);
       throw error;
     }
   }
@@ -44,9 +44,10 @@ export class ClientAPI extends SuperQueries {
         password: signupUserDto.password
       };
       const token = await axios.post(this.authUrl + "/login", loginObject);
+
       return {client: signupClient.data, token: token.data};
     } catch (error) {
-      console.log("error login", error);
+      console.log("error signup", error);
       throw error;
     }
   }

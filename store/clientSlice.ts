@@ -6,7 +6,7 @@ import { LoginUserDto } from "../entities/LoginUserDTO";
 import { ClientAPI } from "../api/clientAPI";
 import { SignupUserDto } from "../entities/SignupUserDTO";
 
-interface ClientState {
+export interface ClientState {
   client: Client | null;
   token: string | null;
   loading: boolean;
@@ -39,7 +39,7 @@ export const login = createAsyncThunk(
 );
 
 export const signup = createAsyncThunk(
-  "auth/signup",
+  "signup",
   async (userData: SignupUserDto, thunkAPI) => {
     try {
       const response = ClientAPI.signup(userData);
@@ -55,7 +55,7 @@ export const signup = createAsyncThunk(
 );
 
 export const getProfile = createAsyncThunk(
-    "auth/profile",
+    "profile",
     async (token: string, thunkAPI) => {
       try {
         const response = ClientAPI.getProfile(token);
@@ -79,9 +79,8 @@ const clientSlice = createSlice({
     logout: (state) => {
       state.token = "";
       console.log("test");
-
+      state.client= null;
       SecureStore.deleteItemAsync("token");
-      SecureStore.deleteItemAsync("role");
     },
   },
   extraReducers: (builder) => {
@@ -94,12 +93,14 @@ const clientSlice = createSlice({
         state.loading = false;
         state.client = action.payload.client;
         state.token = action.payload.token;
+        console.log("state fullfilled", state)
         SecureStore.setItemAsync("token", action.payload.token);
-        SecureStore.setItemAsync("role", action.payload.client.role);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        console.log("state", state)
+
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;
@@ -110,9 +111,20 @@ const clientSlice = createSlice({
         state.client = action.payload.client;
         state.token = action.payload.token;
         SecureStore.setItemAsync("token", action.payload.token);
-        SecureStore.setItemAsync("role", action.payload.client.role);
       })
       .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(getProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.client = action.payload.client;
+      })
+      .addCase(getProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
