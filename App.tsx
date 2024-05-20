@@ -39,9 +39,9 @@ export type RootStackParamList = {
   signup: undefined;
   home: undefined;
   chooseVenue: undefined;
-  chooseWashType: { venue: Venue };
-  chooseExtras: { venue: Venue; washType: WashType };
-  checkout: { venue: Venue; washType: WashType; extras: Extra[] };
+  chooseWashType: undefined;
+  chooseExtras: undefined;
+  checkout: undefined;
   stores: undefined;
   rewards: undefined;
   profile: undefined;

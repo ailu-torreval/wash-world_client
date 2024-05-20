@@ -3,13 +3,15 @@ import { configureStore } from '@reduxjs/toolkit'
 // import entryReducer from './entrySlice';
 import clientReducer from './clientSlice';
 import venuesReducer from './venueSlice';
+import invoiceReducer from './invoiceSlice';
 
 export const store = configureStore({
   reducer: {
     // entries: entryReducer,
     // categories: categoryReducer,
     client: clientReducer,
-    venues: venuesReducer
+    venues: venuesReducer,
+    invoice: invoiceReducer
   },
 })
 
