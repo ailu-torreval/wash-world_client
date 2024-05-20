@@ -17,6 +17,7 @@ export class VenuesAPI extends SuperQueries {
   }
 
   static async fetchAllVenuesByAdmin() {
+    // add token!!!!!!!!
     try {
       const response = await axios.get(this.baseUrl + "/admin");
       return response.data;

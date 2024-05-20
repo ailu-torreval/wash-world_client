@@ -3,7 +3,7 @@ import { Colors, ThemeProvider, createTheme, useTheme } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppDispatch, store } from "./store/store";
+import { AppDispatch, RootState, store } from "./store/store";
 import * as SecureStore from "expo-secure-store";
 import { Role } from "./entities/role";
 import AdminNavigation from "./navigation/AdminNavigation";
@@ -66,7 +66,7 @@ export default function App() {
 function AppContent() {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const client = useSelector((state: any) => state.client);
+  const client = useSelector((state: RootState) => state.client.client);
 
   const { theme } = useTheme();
   const dispatch = useDispatch<AppDispatch>();
@@ -88,11 +88,11 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  if (client && client.role === Role.Admin) {
-    setIsAdmin(true);
+  if (client ) {
+  client.role === Role.Admin && setIsAdmin(true);
+    console.log(client)
+    setIsLogged(true);
   }
-  console.log(client)
-  setIsLogged(true);
 }, [client]);
 
   return (
@@ -110,7 +110,7 @@ useEffect(() => {
       }}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isLogged ? (
+        {isLogged && client !== null ? (
           isAdmin ? (
             <Stack.Group>
               <Stack.Screen name="AdminNav" component={AdminNavigation} />
@@ -137,3 +137,4 @@ useEffect(() => {
     </NavigationContainer>
   );
 }
+

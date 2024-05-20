@@ -13,6 +13,7 @@ import StoresScreen from "../screens/StoresScreen";
 import RewardsScreen from "../screens/RewardsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { RootStackParamList } from "../App";
+import CustomHeader from "../components/CustomHeader";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,11 +59,13 @@ const HomeStack = createNativeStackNavigator<RootStackParamList>();
 const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="homescreen" component={HomeScreen} />
-      <HomeStack.Screen name="chooseVenue" component={ChooseVenueScreen} />
-      <HomeStack.Screen name="chooseWashType" component={WashTypeScreen} />
-      <HomeStack.Screen name="chooseExtras" component={ExtrasScreen} />
-      <HomeStack.Screen name="checkout" component={CheckoutScreen} />
+      <HomeStack.Screen name="homescreen" component={HomeScreen}   options={{
+    header: props => <CustomHeader screen="home" />,
+  }} />
+      <HomeStack.Screen name="chooseVenue" component={ChooseVenueScreen} options={{headerTitle: "1. Choose Venue"}} />
+      <HomeStack.Screen name="chooseWashType" component={WashTypeScreen} options={{headerTitle: "2. Choose Wash Type"}} />
+      <HomeStack.Screen name="chooseExtras" component={ExtrasScreen} options={{headerTitle: "3. Choose Extras"}} />
+      <HomeStack.Screen name="checkout" component={CheckoutScreen} options={{headerTitle: "4. Checkout"}} />
     </HomeStack.Navigator>
   );
 };
