@@ -17,14 +17,33 @@ const initialState: VenuesState = {
 // First, create the thunk
 export const fetchAllVenues = createAsyncThunk(
   "fetchAllVenues",
-  async (thunkAPI) => {
-    return await VenuesAPI.fetchAllVenues();
+  async (_, thunkAPI) => {
+    try {
+
+      return await VenuesAPI.fetchAllVenues();
+    } catch(error) {
+      if (error instanceof Error) {
+        console.log("error", error);
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue("An unknown error occurred");
+    }
+    
   }
 );
 export const fetchAllVenuesByAdmin = createAsyncThunk(
   "fetchAllVenuesByAdmin",
-  async (thunkAPI) => {
-    return await VenuesAPI.fetchAllVenuesByAdmin();
+  async (_, thunkAPI) => {
+    try {
+      
+      return await VenuesAPI.fetchAllVenuesByAdmin();
+    } catch(error) {
+      if (error instanceof Error) {
+        console.log("error", error);
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue("An unknown error occurred");
+    }
   }
 );
 

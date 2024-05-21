@@ -14,7 +14,7 @@ export interface Venue {
 export interface Extra {
   id: number;
   name: string;
-  description: string;
+  icon: string;
   price: number;
   points_price: number;
 }
@@ -25,4 +25,5 @@ export interface WashType {
   description: string;
   price: number;
   points_reward: number;
+  icon: string;
 }

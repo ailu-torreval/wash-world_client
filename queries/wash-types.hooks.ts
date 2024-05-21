@@ -10,10 +10,13 @@ const baseUrl = SuperQueries.baseUrl + "wash-type";
     return useQuery({
         queryKey: ['wash-types'],
         queryFn: async () => {
-            const response = await axios.get<WashType[]>(baseUrl)
-            console.log("Got data");
-            
-            return response.data;
+            // try {
+                const response = await axios.get<WashType[]>(baseUrl);
+                console.log("Got data");
+                return response.data;
+            //   } catch (error) {
+            //     throw new Error
+            //   }
         },
       })
 }

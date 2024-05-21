@@ -1,4 +1,4 @@
-export class WashTypeDto {
+export class WashType {
   id: number;
   name: string;
   description: string;
@@ -7,18 +7,18 @@ export class WashTypeDto {
   icon: string;
 
   constructor(
+    id: number,
     name: string,
     description: string,
     price: number,
     points_reward: number,
-    icon: string,
-    id: number
+    icon: string
   ) {
+    this.id = id;
     this.name = name;
     this.description = description;
     this.price = price;
     this.points_reward = points_reward;
     this.icon = icon;
-    this.id = id;
   }
 }

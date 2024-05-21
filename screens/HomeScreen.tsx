@@ -3,6 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { RootStackParamList } from "../App";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import WashCard from "../components/WashCard";
 
 type Props = NativeStackScreenProps<RootStackParamList, "homescreen">;
 
@@ -63,11 +64,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
-
-  card: {
-    backgroundColor: "#303030",
-  },
-  title: { color: "#fff", fontWeight: "bold", fontSize: 30 },
+    card: {
+      backgroundColor: "#303030",
+    },
+    title: { color: "#fff", fontWeight: "bold", fontSize: 30 },
+  header: {
+    backgroundColor: "#303030"
+  }
 });
 
 export default HomeScreen;

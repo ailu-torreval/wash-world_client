@@ -15,11 +15,9 @@ import { updateInvoiceDto } from "../store/invoiceSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
 
-
 type Props = NativeStackScreenProps<RootStackParamList, "chooseVenue">;
 
-
-const ChooseVenueScreen:React.FC<Props> = ({ navigation }) => {
+const ChooseVenueScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch<AppDispatch>();
   const venues = useSelector((state: RootState) => state.venues.venues);
 
@@ -35,20 +33,20 @@ const ChooseVenueScreen:React.FC<Props> = ({ navigation }) => {
     console.log(venues);
   }, [venues]);
 
-  function updateInvoice(venue_id: number) {
-    console.log(venue_id)
-    dispatch(updateInvoiceDto({venue_id}));
-    navigation.navigate('chooseWashType')
-
-
-}
+  function updateInvoice(venue: Venue) {
+    console.log(venue.id);
+    dispatch(updateInvoiceDto({ venue_id: venue }));
+    navigation.navigate("chooseWashType");
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={venues}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <VenueCard venue={item} action={()=> updateInvoice(item.id)} />}
+        renderItem={({ item }) => (
+          <VenueCard venue={item} action={() => updateInvoice(item)} />
+        )}
       />
     </SafeAreaView>
   );
@@ -56,27 +54,27 @@ const ChooseVenueScreen:React.FC<Props> = ({ navigation }) => {
 
 export default ChooseVenueScreen;
 
-function VenueCard({ venue, action }: { venue: Venue, action:any }) {
-    const { theme } = useTheme();
-    
+function VenueCard({ venue, action }: { venue: Venue; action: any }) {
+  const { theme } = useTheme();
+
   return (
     <TouchableOpacity onPress={action}>
-    <Card containerStyle={styles.card} >
-      <Card.Title
-        style={{
+      <Card containerStyle={styles.card}>
+        <Card.Title
+          style={{
             color: theme.colors.secondary,
             fontSize: 20,
             textAlign: "left",
-        }}
+          }}
         >
-        {venue.name}
-      </Card.Title>
-      <Card.Divider />
-      <Text style={styles.text}>
-        {venue.address}, {venue.zip}, {venue.city}
-      </Text>
-    </Card>
-          </TouchableOpacity>
+          {venue.name}
+        </Card.Title>
+        <Card.Divider />
+        <Text style={styles.text}>
+          {venue.address}, {venue.zip}, {venue.city}
+        </Text>
+      </Card>
+    </TouchableOpacity>
   );
 }
 

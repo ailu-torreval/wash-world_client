@@ -1,0 +1,36 @@
+
+// wash types
+[
+    {
+    "description": "Shampoo,Rinse,AirDry",
+    "icon": "m,car-wash",
+    "id": 4,
+    "name": "Basic",
+    "points_reward": 5,
+    "price": 49
+  },
+  {
+    "description": "Basic +,Brush Washing,Rinse Wax",
+    "icon": "m,gold",
+    "id": 5,
+    "name": "Gold",
+    "points_reward": 7,
+    "price": 79
+  },
+  {
+    "description": "Gold +,Undercarriage Wash,Wheel Wash",
+    "icon": "f,gem",
+    "id": 6,
+    "name": "Premium",
+    "points_reward": 9,
+    "price": 99
+  },
+  {
+    "description": "Premium +,Insect Repellent,Polishing",
+    "icon": "f,crown",
+    "id": 7,
+    "name": "All Inclusive",
+    "points_reward": 13,
+    "price": 109
+  }
+]
