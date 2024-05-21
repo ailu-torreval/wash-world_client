@@ -31,17 +31,10 @@
     "name": "All Inclusive",
     "points_reward": 13,
     "price": 109
-  }
-]
+  }, //
   {
+    "client_id": 5,
     "extras_ids": [
-      {
-        "icon": "m,tire",
-        "id": 8,
-        "name": "Wheel Wash",
-        "points_price": 50,
-        "price": 30
-      },
       {
         "icon": "m,vacuum",
         "id": 6,
@@ -55,24 +48,33 @@
         "name": "Polishing",
         "points_price": 50,
         "price": 30
+      },
+      {
+        "icon": "m,tire",
+        "id": 8,
+        "name": "Wheel Wash",
+        "points_price": 50,
+        "price": 30
       }
     ],
+    "points_redeemed": 50,
+    "total_amount": 99,
     "venue_id": {
-      "address": "Naverland 4",
-      "city": "Copenhagen",
-      "id": 4,
+      "address": "123 Venue Street",
+      "city": "Venue City",
+      "id": 1,
       "lat": 12.345678,
       "lng": 98.765432,
-      "name": "Glostrup",
-      "zip": 2600
+      "name": "Herlev",
+      "zip": 12345
     },
     "washType_id": {
-      "description": "Premium +,Insect Repellent,Polishing",
-      "icon": "f,crown",
-      "id": 7,
-      "name": "All Inclusive",
-      "points_reward": 13,
-      "price": 109
+      "description": "Shampoo,Rinse,AirDry",
+      "icon": "m,car-wash",
+      "id": 4,
+      "name": "Basic",
+      "points_reward": 5,
+      "price": 49
     }
   }
-
+]

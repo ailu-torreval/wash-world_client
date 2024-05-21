@@ -49,15 +49,20 @@ const invoiceSlice = createSlice({
       state.invoiceDto = action.payload;
     },
     finalizeInvoiceDto: (state) => {
-      if (state.invoiceDto.venue_id instanceof Venue) {
-        state.invoiceDto.venue_id = state.invoiceDto.venue_id.id;
+      const newInvoiceDto = { ...state.invoiceDto };
+
+      if (newInvoiceDto.venue_id instanceof Venue) {
+        newInvoiceDto.venue_id = newInvoiceDto.venue_id.id;
       }
-      if (state.invoiceDto.washType_id instanceof WashType) {
-        state.invoiceDto.washType_id = state.invoiceDto.washType_id.id;
+      if (newInvoiceDto.washType_id instanceof WashType) {
+        newInvoiceDto.washType_id = newInvoiceDto.washType_id.id;
       }
-      if (Array.isArray(state.invoiceDto.extras_ids)) {
-        state.invoiceDto.extras_ids = state.invoiceDto.extras_ids.map(extra => extra instanceof Extra ? extra.id : 0);
+      if (Array.isArray(newInvoiceDto.extras_ids)) {
+        newInvoiceDto.extras_ids = newInvoiceDto.extras_ids.map(extra => extra instanceof Extra ? extra.id : 0);
       }
+    
+      state.invoiceDto = newInvoiceDto;
+      console.log("finalized invoice", state.invoiceDto)
     },
   },
   extraReducers: (builder) => {
@@ -79,6 +84,6 @@ const invoiceSlice = createSlice({
   },
 });
 
-export const { updateInvoiceDto } = invoiceSlice.actions;
+export const { updateInvoiceDto, finalizeInvoiceDto } = invoiceSlice.actions;
 
 export default invoiceSlice.reducer;
