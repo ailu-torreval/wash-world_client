@@ -7,7 +7,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 interface WashCardProps {
   washType: WashType;
-  action: any;
+  action: () => void;
 }
 
 const WashCard: React.FC<WashCardProps> = ({ washType, action }) => {

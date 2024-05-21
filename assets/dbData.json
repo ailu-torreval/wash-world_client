@@ -1,7 +1,6 @@
-
 // wash types
 [
-    {
+  {
     "description": "Shampoo,Rinse,AirDry",
     "icon": "m,car-wash",
     "id": 4,
@@ -34,3 +33,46 @@
     "price": 109
   }
 ]
+  {
+    "extras_ids": [
+      {
+        "icon": "m,tire",
+        "id": 8,
+        "name": "Wheel Wash",
+        "points_price": 50,
+        "price": 30
+      },
+      {
+        "icon": "m,vacuum",
+        "id": 6,
+        "name": "Vacuum - 5 min.",
+        "points_price": 30,
+        "price": 20
+      },
+      {
+        "icon": "f,hand-sparkles",
+        "id": 7,
+        "name": "Polishing",
+        "points_price": 50,
+        "price": 30
+      }
+    ],
+    "venue_id": {
+      "address": "Naverland 4",
+      "city": "Copenhagen",
+      "id": 4,
+      "lat": 12.345678,
+      "lng": 98.765432,
+      "name": "Glostrup",
+      "zip": 2600
+    },
+    "washType_id": {
+      "description": "Premium +,Insect Repellent,Polishing",
+      "icon": "f,crown",
+      "id": 7,
+      "name": "All Inclusive",
+      "points_reward": 13,
+      "price": 109
+    }
+  }
+

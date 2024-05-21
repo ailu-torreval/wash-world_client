@@ -8,6 +8,7 @@ import { Extra } from '../entities/Extra';
 import { updateInvoiceDto } from '../store/invoiceSlice';
 import ExtraCard from '../components/ExtraCard';
 import { useGetExtras } from '../queries/extras.hooks';
+import { Button } from '@rneui/themed';
 
 type Props = NativeStackScreenProps<RootStackParamList, "chooseExtras">;
 
@@ -15,20 +16,33 @@ type Props = NativeStackScreenProps<RootStackParamList, "chooseExtras">;
 const ExtrasScreen:React.FC<Props> = ({ navigation }) => {
     const { data: extras, isLoading, isError } = useGetExtras();
     const dispatch = useDispatch<AppDispatch>();
-    const currentInvoice = useSelector((state: RootState)=> state.invoice.invoiceDto);
     const [selected, setSelected] = useState<Extra[]>([])
 
     if (isLoading) {
         return <ActivityIndicator size="large" color="#0CEF78" />;
       
     }
+
+    function handleSelection(extra: Extra) {
+        setSelected(prevSelected => {
+            if (prevSelected.find(e => e.id === extra.id)) {
+                // If the extra is already selected, remove it
+                return prevSelected.filter(e => e.id !== extra.id);
+            } else {
+                // If the extra is not selected, add it
+                return [...prevSelected, extra];
+            }
+        });
+
+    }
     
     
-      function updateInvoice(extra: Extra) {
-        console.log("extra")
-        // dispatch(updateInvoiceDto({extras_id: washType}));
-        console.log("WASH", currentInvoice)
-        navigation.navigate('chooseExtras')
+      function updateInvoice() {
+        console.log("extras", selected)
+        if(selected.length !== 0) {
+            dispatch(updateInvoiceDto({extras_ids: selected}));
+        }
+        navigation.navigate('checkout')
     
       }
     
@@ -37,9 +51,16 @@ const ExtrasScreen:React.FC<Props> = ({ navigation }) => {
         <FlatList
             data={extras}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => <ExtraCard extra={item} action={()=> updateInvoice(item)} />}
+            renderItem={({ item }) => <ExtraCard extra={item} action={()=> handleSelection(item)}
+            selected={!!selected.find(e => e.id === item.id)} />}
           />
-        {/* <WashCard /> */}
+                <View style={styles.footer}>
+        <Button
+          title="Next"
+          size="lg"
+          onPress={updateInvoice}
+        />
+      </View>
       </SafeAreaView>
     );
 };
@@ -63,4 +84,5 @@ const styles = StyleSheet.create({
       borderBottomWidth: 5,
     },
     title: { color: "#fff", fontWeight: "bold", fontSize: 30 },
+    footer: { justifyContent: "flex-end", padding: 4 },
   });

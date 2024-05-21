@@ -54,7 +54,7 @@ const ChooseVenueScreen: React.FC<Props> = ({ navigation }) => {
 
 export default ChooseVenueScreen;
 
-function VenueCard({ venue, action }: { venue: Venue; action: any }) {
+function VenueCard({ venue, action }: { venue: Venue;   action: () => void; }) {
   const { theme } = useTheme();
 
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -7,10 +7,11 @@ import { Extra } from "../entities/Extra";
 
 interface ExtraCardProps {
   extra: Extra;
-  action: any;
+ action: () => void;
+ selected: boolean;
 }
 
-const ExtraCard: React.FC<ExtraCardProps> = ({ extra, action }) => {
+const ExtraCard: React.FC<ExtraCardProps> = ({ extra, action, selected }) => {
   const renderIcon = (icon: string) => {
     const [iconType, iconName] = icon.split(",");
 
@@ -25,8 +26,8 @@ const ExtraCard: React.FC<ExtraCardProps> = ({ extra, action }) => {
   };
 
   return (
-    <TouchableOpacity onPress={action}>
-      <View style={styles.extraCard}>
+    <Pressable onPress={action}>
+      <View  style={[styles.extraCard, selected && styles.selectedCard]}>
         <View style={styles.cardHeader}>
           <Text style={styles.headerText}>{extra.name}</Text>
           {renderIcon(extra.icon)}
@@ -45,7 +46,7 @@ const ExtraCard: React.FC<ExtraCardProps> = ({ extra, action }) => {
           <View style={styles.angle}></View>
         </LinearGradient>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -59,6 +60,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     height: 130,
+  },
+  selectedCard: {
+    borderColor: "#06C167",
+    borderWidth: 2,
   },
   cardHeader: {
     display: "flex",
@@ -76,14 +81,13 @@ const styles = StyleSheet.create({
   },
   contentText: {
     color: "#fff",
-    // style for the contentText
   },
   cardFooter: {
     position: "absolute",
     right: 0,
     bottom: 0,
     width: "80%",
-    height: 50, // adjust this to your needs
+    height: 50, 
     overflow: "hidden",
   },
 
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontWeight: "bold",
     position: "absolute",
-    right: 20, // adjust this to position the text horizontally
+    right: 20,
     bottom: -65,
   },
   subtext: {
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontStyle: "italic",
     position: "absolute",
-    left: 0, // adjust this to position the text horizontally
+    left: 0, 
     bottom: -55,
   },
   angle: {
