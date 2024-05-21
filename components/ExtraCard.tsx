@@ -33,6 +33,7 @@ const ExtraCard: React.FC<ExtraCardProps> = ({ extra, action }) => {
         </View>
         <View style={styles.cardContent}>
 
+          <Text style={styles.subtext}>Redeem <MaterialIcon name="star" size={15} color="#0CEF78" />{extra.points_price} or..</Text>
           <Text style={styles.footerText}>{extra.price} kr.</Text>
         </View>
         <LinearGradient
@@ -71,7 +72,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   cardContent: {
-    marginLeft: 10,
     marginTop: 5,
   },
   contentText: {
@@ -96,6 +96,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 20, // adjust this to position the text horizontally
     bottom: -65,
+  },
+  subtext: {
+    zIndex: 20,
+    color: "#0CEF78",
+    fontSize: 15,
+    fontStyle: "italic",
+    position: "absolute",
+    left: 0, // adjust this to position the text horizontally
+    bottom: -55,
   },
   angle: {
     width: "200%",
