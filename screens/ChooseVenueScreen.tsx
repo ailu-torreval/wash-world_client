@@ -14,6 +14,7 @@ import { Card, useTheme } from "@rneui/themed";
 import { updateInvoiceDto } from "../store/invoiceSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
+import VenueCard from "../components/VenueCard";
 
 type Props = NativeStackScreenProps<RootStackParamList, "chooseVenue">;
 
@@ -45,7 +46,9 @@ const ChooseVenueScreen: React.FC<Props> = ({ navigation }) => {
         data={venues}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <VenueCard venue={item} action={() => updateInvoice(item)} />
+          <TouchableOpacity onPress={() => updateInvoice(item)}>
+          <VenueCard venue={item} />
+           </TouchableOpacity>
         )}
       />
     </SafeAreaView>
@@ -54,29 +57,29 @@ const ChooseVenueScreen: React.FC<Props> = ({ navigation }) => {
 
 export default ChooseVenueScreen;
 
-function VenueCard({ venue, action }: { venue: Venue;   action: () => void; }) {
-  const { theme } = useTheme();
+// function VenueCard({ venue, action }: { venue: Venue;   action: () => void; }) {
+//   const { theme } = useTheme();
 
-  return (
-    <TouchableOpacity onPress={action}>
-      <Card containerStyle={styles.card}>
-        <Card.Title
-          style={{
-            color: theme.colors.secondary,
-            fontSize: 20,
-            textAlign: "left",
-          }}
-        >
-          {venue.name}
-        </Card.Title>
-        <Card.Divider />
-        <Text style={styles.text}>
-          {venue.address}, {venue.zip}, {venue.city}
-        </Text>
-      </Card>
-    </TouchableOpacity>
-  );
-}
+//   return (
+//     <TouchableOpacity onPress={action}>
+//       <Card containerStyle={styles.card}>
+//         <Card.Title
+//           style={{
+//             color: theme.colors.secondary,
+//             fontSize: 20,
+//             textAlign: "left",
+//           }}
+//         >
+//           {venue.name}
+//         </Card.Title>
+//         <Card.Divider />
+//         <Text style={styles.text}>
+//           {venue.address}, {venue.zip}, {venue.city}
+//         </Text>
+//       </Card>
+//     </TouchableOpacity>
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {

@@ -2,9 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { InvoiceDto } from "../entities/InvoiceDTO";
 import { Invoice } from "../entities/Invoice";
 import { InvoicesAPI } from "../api/invoicesAPI";
-import { Venue } from "../entities/Venue";
-import { WashType } from "../entities/WashType";
-import { Extra } from "../entities/Extra";
 import { RootState } from "./store";
 import { invoiceCreated } from "./clientSlice";
 
