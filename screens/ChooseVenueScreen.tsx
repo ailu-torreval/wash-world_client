@@ -57,29 +57,7 @@ const ChooseVenueScreen: React.FC<Props> = ({ navigation }) => {
 
 export default ChooseVenueScreen;
 
-// function VenueCard({ venue, action }: { venue: Venue;   action: () => void; }) {
-//   const { theme } = useTheme();
 
-//   return (
-//     <TouchableOpacity onPress={action}>
-//       <Card containerStyle={styles.card}>
-//         <Card.Title
-//           style={{
-//             color: theme.colors.secondary,
-//             fontSize: 20,
-//             textAlign: "left",
-//           }}
-//         >
-//           {venue.name}
-//         </Card.Title>
-//         <Card.Divider />
-//         <Text style={styles.text}>
-//           {venue.address}, {venue.zip}, {venue.city}
-//         </Text>
-//       </Card>
-//     </TouchableOpacity>
-//   );
-// }
 
 const styles = StyleSheet.create({
   container: {
