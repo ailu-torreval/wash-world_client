@@ -13,6 +13,7 @@ import { getProfile, setToken } from "./store/clientSlice";
 import { NavigationContainer } from "@react-navigation/native";
 import { Extra, Venue, WashType } from "./entities/Interfaces";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AuthContext } from "./store/AuthContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -71,70 +72,65 @@ function AppContent() {
   const { theme } = useTheme();
   const dispatch = useDispatch<AppDispatch>();
 
-useEffect(() => {
-  LogBox.ignoreLogs([
-    "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
-  ]);
-  async function readFromSecureStore() {
-    const token = await SecureStore.getItemAsync("token");
-    if (token) {
-      await dispatch(setToken(token));
-      await dispatch(getProfile(token));
+  useEffect(() => {
+    LogBox.ignoreLogs([
+      "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
+    ]);
+    async function readFromSecureStore() {
+      const token = await SecureStore.getItemAsync("token");
+      if (token) {
+        await dispatch(setToken(token));
+        await dispatch(getProfile(token));
+      }
+      // await SecureStore.deleteItemAsync("token");
     }
-  }
-  console.log(client)
-  readFromSecureStore();
-}, []);
+    console.log(client);
+    readFromSecureStore();
+  }, []);
 
-useEffect(() => {
-  if (client ) {
-  client.role === Role.Admin && setIsAdmin(true);
-    console.log(client)
-    setIsLogged(true);
-  }
-}, [client]);
+  useEffect(() => {
+    if (client) {
+      client.role === Role.Admin && setIsAdmin(true);
+      console.log(client);
+      setIsLogged(true);
+    }
+  }, [client]);
 
   return (
-    <NavigationContainer
-      theme={{
-        colors: {
-          primary: theme.colors.primary,
-          background: theme.colors.background,
-          card: theme.colors.white,
-          text: theme.colors.black,
-          border: "",
-          notification: "",
-        },
-        dark: theme.mode === "dark",
-      }}
+    <AuthContext.Provider
+      value={{ isLogged, setIsLogged, isAdmin, setIsAdmin }}
     >
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isLogged && client !== null ? (
-          isAdmin ? (
-            <Stack.Group>
-              <Stack.Screen name="AdminNav" component={AdminNavigation} />
-            </Stack.Group>
+      <NavigationContainer
+        theme={{
+          colors: {
+            primary: theme.colors.primary,
+            background: theme.colors.background,
+            card: theme.colors.white,
+            text: theme.colors.black,
+            border: "",
+            notification: "",
+          },
+          dark: theme.mode === "dark",
+        }}
+      >
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {isLogged && client !== null ? (
+            isAdmin ? (
+              <Stack.Group>
+                <Stack.Screen name="AdminNav" component={AdminNavigation} />
+              </Stack.Group>
+            ) : (
+              <Stack.Group>
+                <Stack.Screen name="mainNav" component={MainNavigation} />
+              </Stack.Group>
+            )
           ) : (
             <Stack.Group>
-              <Stack.Screen             setIsLogged={setIsLogged}
-                  setIsAdmin={setIsAdmin}  name="mainNav" component={MainNavigation} />
+              <Stack.Screen name="LoginNav" component={LoginNavigation} />
             </Stack.Group>
-          )
-        ) : (
-          <Stack.Group>
-            <Stack.Screen name="LoginNav">
-              {(props: any) => (
-                <LoginNavigation
-                  {...props}
-                  setIsLogged={setIsLogged}
-                  setIsAdmin={setIsAdmin}
-                />
-              )}
-            </Stack.Screen>
-          </Stack.Group>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
-

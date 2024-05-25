@@ -17,7 +17,7 @@ import CustomHeader from "../components/CustomHeader";
 
 const Tab = createBottomTabNavigator();
 
-const MainNavigation: React.FC = ({setIsLogged: any, setIsAdmin: any}) => {
+const MainNavigation: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

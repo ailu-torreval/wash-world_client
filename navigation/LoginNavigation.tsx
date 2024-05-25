@@ -13,9 +13,8 @@ type Props = NativeStackScreenProps<RootStackParamList, "main">;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-
 const MainScreen: React.FC<Props> = ({ navigation }) => {
-  console.log("MAINI")
+  console.log("MAINI");
   return (
     <View style={styles.container}>
       <Image
@@ -47,9 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-const LoginNavigation: React.FC<{ setIsLogged: (isLogged: boolean) => void , setIsAdmin: (isAdmin: boolean) => void }> = ({ setIsLogged, setIsAdmin }) => {
+const LoginNavigation: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="main">
       <Stack.Screen
@@ -57,23 +54,14 @@ const LoginNavigation: React.FC<{ setIsLogged: (isLogged: boolean) => void , set
         component={MainScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="login"
-        options={{ headerTitle: "" }}
-      >
-              {props => <LoginScreen {...props} setIsLogged={setIsLogged}  setIsAdmin={setIsAdmin}  />}
-              </Stack.Screen>
-              <Stack.Screen
-        name="signup"
-        options={{ headerTitle: "" }}
-      >
-              {props => <SignupScreen {...props} setIsLogged={setIsLogged}  setIsAdmin={setIsAdmin}  />}
-              </Stack.Screen>
-
+      <Stack.Screen name="login" options={{ headerTitle: "" }}>
+        {(props) => <LoginScreen />}
+      </Stack.Screen>
+      <Stack.Screen name="signup" options={{ headerTitle: "" }}>
+        {(props) => <SignupScreen />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };
 
 export default LoginNavigation;
-
-

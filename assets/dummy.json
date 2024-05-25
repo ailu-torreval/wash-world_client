@@ -1,56 +1,31 @@
 {
-  "client": {
-    "cars": [],
-    "email": "shiv@mail.com",
-    "firstname": "shiv",
-    "id": 5,
-    "invoices": [],
-    "lastname": "roy",
-    "reward_points_balance": 25,
-    "role": "user"
-  },
-  "date": "2024-05-25T16:34:25.879Z",
-  "extras": [
+  "cars": [{ "id": 44, "license_plate": "abc123" }],
+  "email": "ailin@mail.com",
+  "firstname": "Ailin",
+  "id": 43,
+  "invoices": [
     {
-      "icon": "m,vacuum",
-      "id": 6,
-      "name": "Vacuum - 5 min.",
-      "points_price": 30,
-      "price": 20
+      "date": "2024-05-25T20:36:23.192Z",
+      "extras": [{}],
+      "id": 34,
+      "points_earned": 13,
+      "points_redeemed": 0,
+      "total_amount": 129,
+      "venue": [{}],
+      "washType": [{}]
     },
     {
-      "icon": "f,hand-sparkles",
-      "id": 7,
-      "name": "Polishing",
-      "points_price": 50,
-      "price": 30
-    },
-    {
-      "icon": "m,tire",
-      "id": 8,
-      "name": "Wheel Wash",
-      "points_price": 50,
-      "price": 30
-    },
-    {
-      "icon": "m,car-settings",
-      "id": 9,
-      "name": "Undercarriage Wash",
-      "points_price": 55,
-      "price": 35
+      "date": "2024-05-25T20:37:29.728Z",
+      "extras": [{}],
+      "id": 35,
+      "points_earned": 9,
+      "points_redeemed": 0,
+      "total_amount": 99,
+      "venue": [{}],
+      "washType": [{}]
     }
   ],
-  "id": 15,
-  "points_earned": 5,
-  "points_redeemed": 30,
-  "total_amount": 144,
-  "venue": {
-    "address": "123 Venue Street",
-    "city": "Venue City",
-    "id": 1,
-    "lat": 12.345678,
-    "lng": 98.765432,
-    "name": "Herlev",
-    "zip": 12345
-  }
+  "lastname": "Torre Val",
+  "reward_points_balance": 51,
+  "role": "user"
 }

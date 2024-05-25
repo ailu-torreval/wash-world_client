@@ -7,15 +7,21 @@ import { AppDispatch } from "../store/store";
 import { login, ClientState } from "../store/clientSlice";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
+import { AuthContext } from "../store/AuthContext";
 const logo = require("../assets/logo.png");
 
 
-type Props = {
-  setIsLogged: (isLogged: boolean) => void;
-  setIsAdmin: (isAdmin: boolean) => void;
-};
+// type Props = {
+//   setIsLogged: (isLogged: boolean) => void;
+//   setIsAdmin: (isAdmin: boolean) => void;
+// };
 
-const LoginScreen: React.FC<Props> = ({ setIsLogged, setIsAdmin }) => {
+// const LoginScreen: React.FC<Props> = ({ setIsLogged, setIsAdmin }) => {
+const LoginScreen: React.FC = () => {
+
+  const { setIsLogged, setIsAdmin } = React.useContext(AuthContext);
+
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const dispatch = useDispatch<AppDispatch>();

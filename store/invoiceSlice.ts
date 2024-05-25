@@ -38,7 +38,7 @@ export const createInvoice = createAsyncThunk(
     const invoiceDto: InvoiceDto = state.invoice.invoiceDto as InvoiceDto;
     try {
       const response = await InvoicesAPI.createInvoice(invoiceDto) as unknown as Invoice;
-      thunkAPI.dispatch(invoiceCreated(response));
+      await thunkAPI.dispatch(invoiceCreated(response));
       return response;
     } catch (error) {
       if (error instanceof Error) {

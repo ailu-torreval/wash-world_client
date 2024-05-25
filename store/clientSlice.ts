@@ -1,4 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction, createAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  createAction,
+} from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import * as SecureStore from "expo-secure-store";
 import { Client } from "../entities/Client";
@@ -21,7 +26,7 @@ const initialState: ClientState = {
   error: null,
 };
 
-export const invoiceCreated = createAction<Invoice>('client/invoiceCreated');
+export const invoiceCreated = createAction<Invoice>("client/invoiceCreated");
 
 export const login = createAsyncThunk(
   "login",
@@ -58,19 +63,19 @@ export const signup = createAsyncThunk(
 );
 
 export const getProfile = createAsyncThunk(
-    "profile",
-    async (token: string, thunkAPI) => {
-      try {
-        const response = ClientAPI.getProfile(token);
-        return response;
-      } catch (error) {
-        if (error instanceof Error) {
-          return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue("An unknown error occurred");
+  "profile",
+  async (token: string, thunkAPI) => {
+    try {
+      const response = ClientAPI.getProfile(token);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
       }
+      return thunkAPI.rejectWithValue("An unknown error occurred");
     }
-  );
+  }
+);
 
 const clientSlice = createSlice({
   name: "client",
@@ -82,7 +87,7 @@ const clientSlice = createSlice({
     logout: (state) => {
       state.token = "";
       console.log("test");
-      state.client= null;
+      state.client = null;
       SecureStore.deleteItemAsync("token");
     },
   },
@@ -96,14 +101,13 @@ const clientSlice = createSlice({
         state.loading = false;
         state.client = action.payload.client;
         state.token = action.payload.token;
-        console.log("state fullfilled", state)
+        console.log("state fullfilled", state);
         SecureStore.setItemAsync("token", action.payload.token);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.log("state", state)
-
+        console.log("state", state);
       })
       .addCase(signup.pending, (state) => {
         state.loading = true;
@@ -133,30 +137,43 @@ const clientSlice = createSlice({
       })
       .addCase(invoiceCreated, (state, action) => {
         // Update the reward_points_balance
-        console.log("136",action.payload)
-        if(state.client && action.payload.client !== undefined) {
+        console.log("update client", action.payload);
+        if (state.client && action.payload.client !== undefined) {
+          state.client.reward_points_balance =
+            action.payload.client.reward_points_balance;
 
-          console.log("138",action.payload.client)
-        
-    //     state.client.reward_points_balance = action.payload.client.reward_points_balance;
-    
-    //     // Transform the response to match the shape of client.invoices
+          const newInvoice = {
+            venue: action.payload.venue,
+            extras: action.payload.extras,
+            date: action.payload.date,
+            total_amount: action.payload.total_amount,
+            points_earned: action.payload.points_earned,
+            washType: action.payload.washType,
+            points_redeemed: action.payload.points_redeemed,
+            id: action.payload.id,
+          };
 
-    // // Transform the response to match the shape of client.invoices
-    // const newInvoice = {
-    //   venue: action.payload.venue,
-    //   extras: action.payload.extras,
-    //   date: action.payload.date,
-    //   total_amount: action.payload.total_amount,
-    //   points_earned: action.payload.points_earned,
-    //   washType: action.payload.washType,
-    //   points_redeemed: action.payload.points_redeemed,
-    //   id: action.payload.id
-    // };
+          // Add the new invoice to the invoices array
+          state.client.invoices.push(newInvoice);
+          console.log("138", action.payload.client);
 
-    // // Add the new invoice to the invoices array
-    // state.client.invoices.push(newInvoice);
-      }
+          //     // Transform the response to match the shape of client.invoices
+
+          // // Transform the response to match the shape of client.invoices
+          // const newInvoice = {
+          //   venue: action.payload.venue,
+          //   extras: action.payload.extras,
+          //   date: action.payload.date,
+          //   total_amount: action.payload.total_amount,
+          //   points_earned: action.payload.points_earned,
+          //   washType: action.payload.washType,
+          //   points_redeemed: action.payload.points_redeemed,
+          //   id: action.payload.id
+          // };
+
+          // // Add the new invoice to the invoices array
+          // state.client.invoices.push(newInvoice);
+        }
       });
   },
 });

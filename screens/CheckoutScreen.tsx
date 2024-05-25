@@ -14,8 +14,6 @@ import { Extra } from "../entities/Extra";
 import { Button, Icon, Input } from "@rneui/themed";
 import { createInvoice, updateInvoiceDto } from "../store/invoiceSlice";
 import { InvoiceDto } from "../entities/InvoiceDTO";
-import { Venue } from "../entities/Venue";
-import { WashType } from "../entities/WashType";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../App";
 
