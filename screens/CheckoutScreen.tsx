@@ -6,15 +6,18 @@ import {
   SafeAreaView,
   Switch,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { Extra } from "../entities/Extra";
 import { Button, Icon, Input } from "@rneui/themed";
-import { finalizeInvoiceDto, updateInvoiceDto } from "../store/invoiceSlice";
+import { createInvoice, updateInvoiceDto } from "../store/invoiceSlice";
 import { InvoiceDto } from "../entities/InvoiceDTO";
 import { Venue } from "../entities/Venue";
 import { WashType } from "../entities/WashType";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../App";
 
 type CardDetails = {
   cardNr: string;
@@ -23,7 +26,9 @@ type CardDetails = {
   cvv: string;
 };
 
-const CheckoutScreen: React.FC = () => {
+type Props = NativeStackScreenProps<RootStackParamList, "checkout">;
+
+const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch<AppDispatch>();
   const invoice = useSelector((state: RootState) => state.invoice.invoiceDto);
   const client = useSelector((state: RootState) => state.client.client);
@@ -42,7 +47,7 @@ const CheckoutScreen: React.FC = () => {
   useEffect(() => {
     calculateDiscount();
     calculateTotal();
-  }, [invoice, client]);
+  }, []);
 
   useEffect(() => {
     console.log("invoice updated", invoice);
@@ -71,10 +76,12 @@ const CheckoutScreen: React.FC = () => {
     if (Array.isArray(invoice.extras_ids) && client !== null) {
       const sortedExtras = invoice.extras_ids
         .filter((extra): extra is Extra => typeof extra !== "number")
-        .sort((a, b) => b.points_price - a.points_price);
+        .sort((a, b) => a.points_price - b.points_price);
       let remainingPoints = client.reward_points_balance || 0;
 
+      console.log("73", sortedExtras);
       for (const extra of sortedExtras) {
+        console.log("80", extra.name, extra.points_price);
         if (extra.points_price <= remainingPoints) {
           remainingPoints -= extra.points_price;
           savings += extra.price;
@@ -85,6 +92,7 @@ const CheckoutScreen: React.FC = () => {
       const usedPoints = client?.reward_points_balance - remainingPoints;
       setPointsToRedeem(usedPoints);
     }
+    console.log("SAV 89", savings);
     setDiscount(savings);
 
     return savings;
@@ -113,27 +121,59 @@ const CheckoutScreen: React.FC = () => {
   async function handlePayment() {
     console.log("pay");
     if (client !== null) {
+      let partialInvoice: Partial<InvoiceDto> = {
+        client_id: client.id,
+        total_amount: discountApplied ? totalAmount - discount : totalAmount,
+        points_redeemed: discountApplied ? pointsToRedeem : 0,
+      };
 
+      if (
+        invoice.venue_id &&
+        typeof invoice.venue_id === "object" &&
+        "id" in invoice.venue_id
+      ) {
+        partialInvoice.venue_id = invoice.venue_id.id;
+      }
+      if (
+        invoice.washType_id &&
+        typeof invoice.washType_id === "object" &&
+        "id" in invoice.washType_id
+      ) {
+        partialInvoice.points_earned = invoice.washType_id.points_reward;
+        partialInvoice.washType_id = invoice.washType_id.id;
+      }
+      if (invoice.extras_ids && Array.isArray(invoice.extras_ids)) {
+        partialInvoice.extras_ids = invoice.extras_ids.map(
+          (extra: Extra | number) => {
+            if (typeof extra === "object" && "id" in extra) {
+              return extra.id;
+            } else {
+              return 0;
+            }
+          }
+        );
+        console.log("Mapped extras_ids:", partialInvoice.extras_ids);
+      } else if (invoice.extras_ids === undefined) {
+        partialInvoice.extras_ids = [];
+      }
+      console.log("invoice before updating", partialInvoice);
 
-      let localInvoice: Partial<InvoiceDto> = {
-      client_id: client.id,
-      total_amount: discountApplied ? totalAmount - discount : totalAmount,
-      points_redeemed: discountApplied ? pointsToRedeem : 0,
-    };
-
-    if (invoice.venue_id  && invoice.venue_id instanceof Venue) {
-      localInvoice.venue_id = invoice.venue_id.id;
-    }
-    if (invoice.washType_id && invoice.washType_id instanceof WashType) {
-      localInvoice.washType_id = invoice.washType_id.id;
-    }
-    if (invoice.extras_ids && Array.isArray(invoice.extras_ids)) {
-      localInvoice.extras_ids = invoice.extras_ids.map(extra => extra instanceof Extra ? extra.id : 0);
-    };
-
-    await dispatch(updateInvoiceDto(localInvoice));
-    //   await dispatch(finalizeInvoiceDto());
-      console.log("line 119",invoice)
+      try {
+        await dispatch(updateInvoiceDto(partialInvoice));
+        await dispatch(createInvoice());
+        Alert.alert(
+          "Payment Accepted!",
+          "Just relax now and we will take it from here.",
+          [
+            {
+              text: "Back to Home",
+              onPress: () => navigation.navigate("homescreen"),
+            },
+          ]
+        );
+      } catch (error) {
+        Alert.alert("Something went wrong. Please try again.");
+      }
     }
   }
 
@@ -365,9 +405,7 @@ const styles = StyleSheet.create({
   subtotalValue: { color: "#fff", fontWeight: "bold", fontSize: 17 },
   total: { color: "#0CEF78", fontWeight: "bold", fontSize: 20 },
   totalValue: { color: "#0CEF78", fontWeight: "bold", fontSize: 20 },
-  inputContainer: {
-    //kdkdk
-  },
+  inputContainer: {},
   labelStyle: {
     fontWeight: "bold",
   },

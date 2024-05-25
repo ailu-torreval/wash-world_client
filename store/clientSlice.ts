@@ -1,10 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction, createAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import * as SecureStore from "expo-secure-store";
 import { Client } from "../entities/Client";
 import { LoginUserDto } from "../entities/LoginUserDTO";
 import { ClientAPI } from "../api/clientAPI";
 import { SignupUserDto } from "../entities/SignupUserDTO";
+import { Invoice } from "../entities/Invoice";
 
 export interface ClientState {
   client: Client | null;
@@ -19,6 +20,8 @@ const initialState: ClientState = {
   loading: false,
   error: null,
 };
+
+export const invoiceCreated = createAction<Invoice>('client/invoiceCreated');
 
 export const login = createAsyncThunk(
   "login",
@@ -127,6 +130,33 @@ const clientSlice = createSlice({
       .addCase(getProfile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(invoiceCreated, (state, action) => {
+        // Update the reward_points_balance
+        console.log("136",action.payload)
+        if(state.client && action.payload.client !== undefined) {
+
+          console.log("138",action.payload.client)
+        
+    //     state.client.reward_points_balance = action.payload.client.reward_points_balance;
+    
+    //     // Transform the response to match the shape of client.invoices
+
+    // // Transform the response to match the shape of client.invoices
+    // const newInvoice = {
+    //   venue: action.payload.venue,
+    //   extras: action.payload.extras,
+    //   date: action.payload.date,
+    //   total_amount: action.payload.total_amount,
+    //   points_earned: action.payload.points_earned,
+    //   washType: action.payload.washType,
+    //   points_redeemed: action.payload.points_redeemed,
+    //   id: action.payload.id
+    // };
+
+    // // Add the new invoice to the invoices array
+    // state.client.invoices.push(newInvoice);
+      }
       });
   },
 });

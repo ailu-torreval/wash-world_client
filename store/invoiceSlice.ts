@@ -5,6 +5,8 @@ import { InvoicesAPI } from "../api/invoicesAPI";
 import { Venue } from "../entities/Venue";
 import { WashType } from "../entities/WashType";
 import { Extra } from "../entities/Extra";
+import { RootState } from "./store";
+import { invoiceCreated } from "./clientSlice";
 
 interface InvoiceState {
   invoiceDto: Partial<InvoiceDto>;
@@ -15,7 +17,15 @@ interface InvoiceState {
 
 // Initial state
 const initialState: InvoiceState = {
-  invoiceDto: {},
+  invoiceDto: {
+    client_id: undefined,
+    venue_id: undefined,
+    washType_id: undefined,
+    extras_ids: undefined,
+    total_amount: undefined,
+    points_earned: undefined,
+    points_redeemed: undefined,
+  },
   invoice: null,
   loading: false,
   error: null,
@@ -23,9 +33,12 @@ const initialState: InvoiceState = {
 
 export const createInvoice = createAsyncThunk(
   "createInvoice",
-  async (invoice: InvoiceDto, thunkAPI) => {
+  async (_, thunkAPI) => {
+    let state: RootState = thunkAPI.getState() as RootState;
+    const invoiceDto: InvoiceDto = state.invoice.invoiceDto as InvoiceDto;
     try {
-      const response = InvoicesAPI.createInvoice(invoice);
+      const response = await InvoicesAPI.createInvoice(invoiceDto) as unknown as Invoice;
+      thunkAPI.dispatch(invoiceCreated(response));
       return response;
     } catch (error) {
       if (error instanceof Error) {
@@ -42,39 +55,29 @@ const invoiceSlice = createSlice({
   initialState,
   reducers: {
     updateInvoiceDto: (state, action: PayloadAction<Partial<InvoiceDto>>) => {
+      // state.invoiceDto = { ...state.invoiceDto, ...action.payload };
+      // console.log("FROM SLICE", state.invoiceDto)
       state.invoiceDto = { ...state.invoiceDto, ...action.payload };
-      console.log("FROM SLICE", state.invoiceDto)
+      if (action.payload.extras_ids) {
+        state.invoiceDto.extras_ids = action.payload.extras_ids;
+      }
+      console.log("FROM SLICE", state.invoiceDto);
     },
     replaceInvoiceDto: (state, action: PayloadAction<InvoiceDto>) => {
       state.invoiceDto = action.payload;
-    },
-    finalizeInvoiceDto: (state) => {
-      const newInvoiceDto = { ...state.invoiceDto };
-
-      if (newInvoiceDto.venue_id instanceof Venue) {
-        newInvoiceDto.venue_id = newInvoiceDto.venue_id.id;
-      }
-      if (newInvoiceDto.washType_id instanceof WashType) {
-        newInvoiceDto.washType_id = newInvoiceDto.washType_id.id;
-      }
-      if (Array.isArray(newInvoiceDto.extras_ids)) {
-        newInvoiceDto.extras_ids = newInvoiceDto.extras_ids.map(extra => extra instanceof Extra ? extra.id : 0);
-      }
-    
-      state.invoiceDto = newInvoiceDto;
-      console.log("finalized invoice", state.invoiceDto)
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createInvoice.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(
         createInvoice.fulfilled,
         (state, action: PayloadAction<Invoice>) => {
           state.loading = false;
           state.invoice = action.payload;
+          console.log("invoice created, invoice slice", action.payload)
         }
       )
       .addCase(createInvoice.rejected, (state, action) => {
@@ -84,6 +87,6 @@ const invoiceSlice = createSlice({
   },
 });
 
-export const { updateInvoiceDto, finalizeInvoiceDto } = invoiceSlice.actions;
+export const { updateInvoiceDto } = invoiceSlice.actions;
 
 export default invoiceSlice.reducer;

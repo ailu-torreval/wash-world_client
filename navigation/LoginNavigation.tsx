@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
 
 
 const LoginNavigation: React.FC<{ setIsLogged: (isLogged: boolean) => void , setIsAdmin: (isAdmin: boolean) => void }> = ({ setIsLogged, setIsAdmin }) => {
-  console.log("login")
   return (
     <Stack.Navigator initialRouteName="main">
       <Stack.Screen

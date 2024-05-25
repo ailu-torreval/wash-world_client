@@ -71,7 +71,6 @@ function AppContent() {
   const { theme } = useTheme();
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log("jdjddko");
 useEffect(() => {
   LogBox.ignoreLogs([
     "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
@@ -117,7 +116,8 @@ useEffect(() => {
             </Stack.Group>
           ) : (
             <Stack.Group>
-              <Stack.Screen name="mainNav" component={MainNavigation} />
+              <Stack.Screen             setIsLogged={setIsLogged}
+                  setIsAdmin={setIsAdmin}  name="mainNav" component={MainNavigation} />
             </Stack.Group>
           )
         ) : (

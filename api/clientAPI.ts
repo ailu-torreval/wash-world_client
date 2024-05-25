@@ -22,6 +22,8 @@ export class ClientAPI extends SuperQueries {
 
 
   static async getProfile(token:string) {
+    console.log("client api 26", token)
+
     try {
       const response = await axios.get(this.authUrl + "/profile", {
         headers: {
