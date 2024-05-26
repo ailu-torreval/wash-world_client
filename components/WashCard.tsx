@@ -4,6 +4,7 @@ import { WashType } from "../entities/Interfaces";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { AuthContext } from "../store/AuthContext";
 
 interface WashCardProps {
   washType: WashType;
@@ -11,6 +12,8 @@ interface WashCardProps {
 }
 
 const WashCard: React.FC<WashCardProps> = ({ washType, action }) => {
+  const { isAdmin } = React.useContext(AuthContext);
+
   const renderIcon = (icon: string) => {
     const [iconType, iconName] = icon.split(",");
 
@@ -26,19 +29,19 @@ const WashCard: React.FC<WashCardProps> = ({ washType, action }) => {
 
   return (
     <TouchableOpacity onPress={action}>
-      <View style={styles.washCard}>
+      <View style={[isAdmin ? styles.adminCard : styles.washCard]}>
         <View style={styles.cardHeader}>
           <Text style={styles.headerText}>{washType.name}</Text>
           {renderIcon(washType.icon)}
         </View>
-        <View style={styles.cardContent}>
+        <View style={[isAdmin ? styles.adminContent : styles.cardContent]}>
 
-          {washType.description.split(",").map((desc, index) => (
+          {isAdmin ? <Text  style={styles.contentText}>Click to edit price</Text>  : (washType.description.split(",").map((desc, index) => (
             <Text key={index} style={styles.contentText}>
              - {desc}
             </Text>
-          ))}
-          <Text style={styles.footerText}>{washType.price} kr.</Text>
+          )))}
+          <Text style={[styles.footerText, isAdmin ? styles.adminHeight : styles.footerHeight]}>{washType.price} kr.</Text>
         </View>
         <LinearGradient
           style={styles.cardFooter}
@@ -64,6 +67,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: 130,
   },
+  adminCard: {
+    backgroundColor: "#303030",
+    marginVertical: 17,
+    marginHorizontal: 18,
+    borderBottomColor: "#06C167",
+    borderBottomWidth: 4,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    height: 110,
+  },
   cardHeader: {
     display: "flex",
     flexDirection: "row",
@@ -77,6 +90,10 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     marginLeft: 10,
+    marginTop: 5,
+  },
+  adminContent: {
+
     marginTop: 5,
   },
   contentText: {
@@ -100,7 +117,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     position: "absolute",
     right: 20, // adjust this to position the text horizontally
-    bottom: -5,
+  },
+  footerHeight: {
+    bottom: -5, // -22 
+  },
+  adminHeight: {
+    bottom: -22 
   },
   angle: {
     width: "200%",
