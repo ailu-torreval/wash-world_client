@@ -3,6 +3,7 @@ import { SuperQueries } from "../api/SuperQueries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { WashType } from "../entities/Interfaces";
 import { WashTypeDto } from "../entities/washTypeDTO";
+import { Alert } from "react-native";
 
 const baseUrl = SuperQueries.baseUrl + "wash-type";
 
@@ -23,13 +24,20 @@ const baseUrl = SuperQueries.baseUrl + "wash-type";
 
 export const useEditWashType = () => {
     const queryClient = useQueryClient();
+    console.log("from query")
 
     return useMutation({
         mutationFn: (editedWashType: WashTypeDto) => {
-            return axios.put(baseUrl + editedWashType.id , editedWashType)
+            console.log("query 30",editedWashType)
+            return axios.put(`${baseUrl}/${editedWashType.id}` , editedWashType)
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['wash-types'] })
-          }  
+            Alert.alert("Price changed")
+
+          },
+          onError: (error) => {
+            console.log(error);
+        }  
     })
 }
