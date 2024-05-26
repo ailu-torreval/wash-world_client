@@ -18,7 +18,7 @@ const CustomHeader: React.FC<Props> = ({screen}) => {
         {screen === 'home' ?
         <Header
             leftComponent={
-                <Text style={{ color: "#fff", fontWeight: 'bold', fontSize: 18, textTransform: 'capitalize'  }}>Hi {client !== null && client.client.firstname}!</Text>}
+                <Text style={{ color: "#fff", fontWeight: 'bold', fontSize: 18, textTransform: 'capitalize', width: "130%"}}>Hi {client !== null && client.client.firstname}!</Text>}
             rightComponent={
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ color: theme.colors.primary, fontWeight: 'bold', fontSize: 18 }}>{client !== null && client.client.reward_points_balance}</Text>

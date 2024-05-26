@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
 import VenueCard from "../components/VenueCard";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { fetchAllVenues } from "../store/venueSlice";
 
 const StoresScreen: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const venues = useSelector((state: RootState) => state.venues.venues);
+
+
+  useEffect(() => {
+    console.log(venues)
+    async function fetchVenues() {
+      await dispatch(fetchAllVenues());
+    }
+
+    if(!venues || venues.length === 0) {
+      fetchVenues();
+    }
+  }, []);
+
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Find a Store close to you</Text>

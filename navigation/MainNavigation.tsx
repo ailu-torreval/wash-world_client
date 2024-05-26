@@ -1,8 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { Extra, Venue, WashType } from "../entities/Interfaces";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import ChooseVenueScreen from "../screens/ChooseVenueScreen";
@@ -14,6 +12,8 @@ import RewardsScreen from "../screens/RewardsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import { RootStackParamList } from "../App";
 import CustomHeader from "../components/CustomHeader";
+import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -26,16 +26,16 @@ const MainNavigation: React.FC = () => {
 
           if (route.name === "home") {
             iconName = "home";
-          } else if (route.name === "Stores") {
-            iconName = "map";
+          } else if (route.name === "Venues") {
+            iconName = "garage-variant";
           } else if (route.name === "Rewards") {
             iconName = "star";
           } else if (route.name === "Profile") {
-            iconName = "user";
+            iconName = "account";
           }
 
           // You can return any component that you like here!
-          return <Icon name={iconName || "home"} size={size} color={color} />;
+          return <MaterialIcon  name={iconName || "home"} size={size +8} color={color} />;
         },
         tabBarActiveTintColor: "#0DCC70",
         tabBarInactiveTintColor: "gray",
@@ -44,8 +44,8 @@ const MainNavigation: React.FC = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="home" component={HomeStackNavigator} />
-      <Tab.Screen name="Stores" component={StoresScreen} />
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
+      <Tab.Screen name="Venues" component={StoresScreen} />
       <Tab.Screen name="Rewards" component={RewardsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

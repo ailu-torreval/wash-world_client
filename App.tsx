@@ -48,6 +48,9 @@ export type RootStackParamList = {
   profile: undefined;
   mainNav: undefined;
   homescreen: undefined;
+  // adminHome:undefined;
+  // adminProfile: undefined;
+  // services: undefined;
 };
 
 const queryClient = new QueryClient();
@@ -82,7 +85,7 @@ function AppContent() {
         await dispatch(setToken(token));
         await dispatch(getProfile(token));
       }
-      // await SecureStore.deleteItemAsync("token");
+    //  await SecureStore.deleteItemAsync("token");
     }
     console.log(client);
     readFromSecureStore();
@@ -93,6 +96,7 @@ function AppContent() {
       client.role === Role.Admin && setIsAdmin(true);
       console.log(client);
       setIsLogged(true);
+      //setIsAdmin(true);
     }
   }, [client]);
 

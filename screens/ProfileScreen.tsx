@@ -43,6 +43,23 @@ const ProfileScreen: React.FC = () => {
       </View>
 
       <View>
+      <ListItem>
+          <Icon
+            name="car-side"
+            type="material-community"
+            size={25}
+            color="#0CEF78"
+          />
+
+          <ListItem.Content>
+            <ListItem.Title>License Plate</ListItem.Title>
+          </ListItem.Content>
+          <ListItem.Content right>
+                  <ListItem.Title right style={{ color: "#0CEF78" }}>
+                  {client && client.cars[0].license_plate}
+                  </ListItem.Title>
+                </ListItem.Content>
+        </ListItem>
         {client && client.invoices.length > 0 &&
         <ListItem.Accordion
           content={
@@ -116,6 +133,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 22,
     paddingVertical: 20,
+    textTransform: "capitalize"
   },
   profileHeader: {
     display: "flex",
