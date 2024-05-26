@@ -11,6 +11,7 @@ import { LoginUserDto } from "../entities/LoginUserDTO";
 import { ClientAPI } from "../api/clientAPI";
 import { SignupUserDto } from "../entities/SignupUserDTO";
 import { Invoice } from "../entities/Invoice";
+import { clearVenues } from "./venueSlice";
 
 export interface ClientState {
   client: Client | null;
@@ -77,19 +78,17 @@ export const getProfile = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk('logout', async () => {
+  await SecureStore.deleteItemAsync('token');
+});
+
 const clientSlice = createSlice({
   name: "client",
   initialState,
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
-    },
-    logout: (state) => {
-      state.token = "";
-      console.log("test");
-      state.client = null;
-      SecureStore.deleteItemAsync("token");
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -174,11 +173,15 @@ const clientSlice = createSlice({
           // // Add the new invoice to the invoices array
           // state.client.invoices.push(newInvoice);
         }
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.token = '';
+        state.client = null;
       });
   },
 });
 
-export const { setToken, logout } = clientSlice.actions;
+export const { setToken } = clientSlice.actions;
 // export const selectUser = (state: RootState) => state.user.user;
 // export const selectToken = (state: RootState) => state.user.token;
 // export const selectLoading = (state: RootState) => state.user.loading;

@@ -33,10 +33,10 @@ export const fetchAllVenues = createAsyncThunk(
 );
 export const fetchAllVenuesByAdmin = createAsyncThunk(
   "fetchAllVenuesByAdmin",
-  async (_, thunkAPI) => {
+  async (token:string, thunkAPI) => {
     try {
       
-      return await VenuesAPI.fetchAllVenuesByAdmin();
+      return await VenuesAPI.fetchAllVenuesByAdmin(token);
     } catch(error) {
       if (error instanceof Error) {
         console.log("error", error);
@@ -50,7 +50,11 @@ export const fetchAllVenuesByAdmin = createAsyncThunk(
 export const venueSlice = createSlice({
   name: "venues",
   initialState,
-  reducers: {},
+  reducers: {
+    clearVenues: (state) => {
+      state.venues = []; // or however you want to clear your state
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllVenues.pending, (state: VenuesState) => {
@@ -81,6 +85,6 @@ export const venueSlice = createSlice({
   },
 });
 
-export const {} = venueSlice.actions;
+export const {clearVenues} = venueSlice.actions;
 
 export default venueSlice.reducer;

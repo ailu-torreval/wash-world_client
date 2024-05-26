@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableHighlight, ScrollView } from "react-native";
 import { AuthContext } from "../store/AuthContext";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { Icon, ListItem } from "@rneui/themed";
 import * as SecureStore from "expo-secure-store";
 import { format } from "date-fns";
+import { logout } from "../store/clientSlice";
+import { clearVenues } from "../store/venueSlice";
+
 
 const AdminProfileScreen: React.FC = () => {
   const { setIsLogged, setIsAdmin } = React.useContext(AuthContext);
   const client = useSelector((state: RootState) => state.client.client);
   const [expanded, setExpanded] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+
 
   useEffect(() => {
     if (client) {
@@ -22,9 +27,10 @@ const AdminProfileScreen: React.FC = () => {
   }, [client]);
 
 
-  async function logout() {
+  async function handleLogout() {
     console.log("logout");
-    await SecureStore.deleteItemAsync("token");
+    await dispatch(clearVenues());
+    await dispatch(logout())
     setIsLogged(false);
     setIsAdmin(false);
   }
@@ -44,7 +50,7 @@ const AdminProfileScreen: React.FC = () => {
       </View>
 
       <View>
-        <ListItem onPress={logout} Component={TouchableHighlight}>
+        <ListItem onPress={handleLogout} Component={TouchableHighlight}>
           <Icon
             name="logout"
             type="material-community"

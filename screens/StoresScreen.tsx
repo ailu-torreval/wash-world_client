@@ -11,9 +11,10 @@ const StoresScreen: React.FC = () => {
 
 
   useEffect(() => {
-    console.log(venues)
+    console.log("EFF",venues)
     async function fetchVenues() {
       await dispatch(fetchAllVenues());
+
     }
 
     if(!venues || venues.length === 0) {
