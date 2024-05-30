@@ -39,6 +39,7 @@ const RewardsScreen: React.FC = () => {
       </Text>
 
       <FlatList
+      style={styles.cardContainer}
         data={extras}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <ExtraCard extra={item} />}
@@ -87,7 +88,6 @@ function ExtraCard({ extra }: { extra: Extra }) {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    justifyContent: "center",
     // alignItems: "center",
     padding: 15,
   },
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 22,
     paddingVertical: 10,
-    marginTop: 40,
+    paddingHorizontal: 10,
+    marginTop: 20,
     lineHeight: 30,
   },
   subtitle: {
@@ -171,4 +172,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "-30deg" }],
     marginLeft: "-40%",
   },
+  cardContainer: {
+    marginBottom:50
+  }
 });

@@ -39,7 +39,7 @@ const MainNavigation: React.FC = () => {
         },
         tabBarActiveTintColor: "#0DCC70",
         tabBarInactiveTintColor: "gray",
-        tabBarStyle: { height: 70 },
+        tabBarStyle: { height: 100 },
         tabBarItemStyle: { paddingBottom: 10 },
         headerShown: false,
       })}
@@ -62,10 +62,10 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="homescreen" component={HomeScreen}   options={{
     header: props => <CustomHeader screen="home" />,
   }} />
-      <HomeStack.Screen name="chooseVenue" component={ChooseVenueScreen} options={{headerTitle: "1. Choose Venue"}} />
-      <HomeStack.Screen name="chooseWashType" component={WashTypeScreen} options={{headerTitle: "2. Choose Wash Type"}} />
-      <HomeStack.Screen name="chooseExtras" component={ExtrasScreen} options={{headerTitle: "3. Choose Extras"}} />
-      <HomeStack.Screen name="checkout" component={CheckoutScreen} options={{headerTitle: "4. Checkout"}} />
+      <HomeStack.Screen name="chooseVenue" component={ChooseVenueScreen} options={{headerTitle: "1. Choose Venue", headerBackTitleVisible: false }} />
+      <HomeStack.Screen name="chooseWashType" component={WashTypeScreen} options={{headerTitle: "2. Choose Wash Type", headerBackTitleVisible: false }} />
+      <HomeStack.Screen name="chooseExtras" component={ExtrasScreen} options={{headerTitle: "3. Choose Extras", headerBackTitleVisible: false }} />
+      <HomeStack.Screen name="checkout" component={CheckoutScreen} options={{headerTitle: "4. Checkout", headerBackTitleVisible: false }} />
     </HomeStack.Navigator>
   );
 };

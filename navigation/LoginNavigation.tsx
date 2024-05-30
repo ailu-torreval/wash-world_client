@@ -52,12 +52,12 @@ const LoginNavigation: React.FC = () => {
       <Stack.Screen
         name="main"
         component={MainScreen}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, headerBackTitleVisible: false  }}
       />
-      <Stack.Screen name="login" options={{ headerTitle: "" }}>
+      <Stack.Screen name="login" options={{ headerTitle: "" , headerBackTitleVisible: false }}>
         {(props) => <LoginScreen />}
       </Stack.Screen>
-      <Stack.Screen name="signup" options={{ headerTitle: "" }}>
+      <Stack.Screen name="signup" options={{ headerTitle: "", headerBackTitleVisible: false  }}>
         {(props) => <SignupScreen />}
       </Stack.Screen>
     </Stack.Navigator>

@@ -31,7 +31,7 @@ const AdminNavigation: React.FC = () => {
         },
         tabBarActiveTintColor: "#0DCC70",
         tabBarInactiveTintColor: "gray",
-        tabBarStyle: { height: 70 },
+        tabBarStyle: { height: 100 },
         tabBarItemStyle: { paddingBottom: 10 },
         headerShown: false,
       })}

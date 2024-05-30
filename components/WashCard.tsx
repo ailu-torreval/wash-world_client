@@ -41,8 +41,11 @@ const WashCard: React.FC<WashCardProps> = ({ washType, action }) => {
              - {desc}
             </Text>
           )))}
-          <Text style={[styles.footerText, isAdmin ? styles.adminHeight : styles.footerHeight]}>{washType.price} kr.</Text>
         </View>
+          <View style={{zIndex: 1}}>
+
+          <Text style={[styles.footerText, isAdmin ? styles.adminHeight : styles.footerHeight]}>{washType.price} kr.</Text>
+          </View>
         <LinearGradient
           style={styles.cardFooter}
           start={{ x: 0.5, y: 0 }}
@@ -59,7 +62,7 @@ const WashCard: React.FC<WashCardProps> = ({ washType, action }) => {
 const styles = StyleSheet.create({
   washCard: {
     backgroundColor: "#303030",
-    marginVertical: 22,
+    marginVertical: 12,
     marginHorizontal: 18,
     borderBottomColor: "#06C167",
     borderBottomWidth: 4,
@@ -110,19 +113,20 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    zIndex: 20,
     color: "#fff",
     fontSize: 25,
     fontStyle: "italic",
     fontWeight: "bold",
     position: "absolute",
-    right: 20, // adjust this to position the text horizontally
+    right: 20,
   },
   footerHeight: {
-    bottom: -5, // -22 
+    bottom: -130, 
+    top:-10// -22 
   },
   adminHeight: {
-    bottom: -22 
+    bottom: -52,
+    top:4 
   },
   angle: {
     width: "200%",

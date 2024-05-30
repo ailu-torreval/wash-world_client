@@ -67,6 +67,7 @@ const ProfileScreen: React.FC = () => {
         </ListItem>
         {client && client.invoices.length > 0 &&
         <ListItem.Accordion
+        icon = {	<Icon name={'chevron-down'} type="material-community" />}
           content={
             <>
               <FontAwesome5 name="file-alt" size={25} color="#0CEF78" />
@@ -74,7 +75,7 @@ const ProfileScreen: React.FC = () => {
                 <ListItem.Title>Invoices</ListItem.Title>
                 <ListItem.Subtitle>Tap to expand</ListItem.Subtitle>
               </ListItem.Content>
-              <ListItem.Chevron />
+              {/* <ListItem.Chevron /> */}
             </>
           }
           isExpanded={expanded}

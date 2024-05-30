@@ -1,6 +1,6 @@
 import { Card, FAB, useTheme } from "@rneui/themed";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { RootStackParamList } from "../App";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import WashCard from "../components/WashCard";
@@ -14,7 +14,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { theme } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>How does it work?</Text>
       <Card containerStyle={styles.card}>
         <Card.Title style={{ color: theme.colors.secondary, fontSize:20, textAlign:'left'}}>
@@ -51,23 +51,23 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         icon={{ name: "local-car-wash" }}
         size="large"
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    paddingTop: 45
   },
   text: {
     color: "white",
-    fontSize: 20,
+    fontSize: 20
   },
     card: {
       backgroundColor: "#303030",
     },
-    title: { color: "#fff", fontWeight: "bold", fontSize: 30 },
+    title: { color: "#fff", fontWeight: "bold", fontSize: 30, paddingTop:30 },
   header: {
     backgroundColor: "#303030"
   }
