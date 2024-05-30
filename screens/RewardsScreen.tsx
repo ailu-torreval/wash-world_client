@@ -70,9 +70,7 @@ function ExtraCard({ extra }: { extra: Extra }) {
         <Text style={styles.headerText}>{extra.name}</Text>
         {renderIcon(extra.icon)}
       </View>
-      <View style={styles.cardContent}>
         <Text style={styles.footerText}>{extra.points_price}<MaterialIcon name="star" size={25} /></Text>
-      </View>
       <LinearGradient
         style={styles.cardFooter}
         start={{ x: 0.5, y: 0 }}
@@ -108,7 +106,7 @@ const styles = StyleSheet.create({
   },
   extraCard: {
     backgroundColor: "#303030",
-    marginVertical: 18,
+    marginVertical: 10,
     marginHorizontal: 18,
     borderBottomColor: "#06C167",
     borderBottomWidth: 4,
@@ -136,6 +134,7 @@ const styles = StyleSheet.create({
   },
   contentText: {
     color: "#fff",
+    zIndex:20
   },
   cardFooter: {
     position: "absolute",
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     position: "absolute",
     right: 20,
-    bottom: -55,
+    bottom: 5,
   },
   subtext: {
     zIndex: 20,
