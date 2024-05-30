@@ -77,4 +77,38 @@
       "price": 49
     }
   }
+],
+
+// venues
+[
+  {"name":"Herlev","address":"123 Venue Street","zip":12345,"city":"Venue City","lat":12.345678,"lng":98.765432},
+  {"name":"Søborg","address":"Tårnvej 33","zip":2600,"city":"Copenhagen","lat":12.345678,"lng":98.765432},
+  {"name":"Hellerup","address":"Onsgårdsvej 18","zip":2900,"city":"Copenhagen","lat":12.345678,"lng":98.765432},
+  {"name":"Glostrup","address":"Naverland 4","zip":2600,"city":"Copenhagen","lat":12.345678,"lng":98.765432}
 ]
+
+
+queries:
+
+INSERT INTO "wash_type" (name, description, price, points_reward, icon)
+VALUES 
+('Basic', 'Shampoo,Rinse,AirDry', 49, 5, 'm,car-wash'),
+('Gold', 'Basic +,Brush Washing,Rinse Wax', 79, 7, 'm,gold'),
+('Premium', 'Gold +,Undercarriage Wash,Wheel Wash', 99, 9, 'f,gem'),
+('All Inclusive', 'Premium +,Insect Repellent,Polishing', 109, 13, 'f,crown');
+
+
+INSERT INTO "extra" (name, price, points_price, icon)
+  VALUES 
+  ('Vacuum - 5 min.', 20, 30, 'm,vacuum'),
+  ('Polishing', 30, 50, 'f,hand-sparkles'),
+  ('Wheel Wash', 30, 50, 'm,tire'),
+  ('Undercarriage Wash', 35, 55, 'm,car-settings');
+
+
+INSERT INTO "venue" (name, address, zip, city, lat, lng)
+  VALUES 
+  ('Herlev', '123 Venue Street', 12345, 'Venue City', 12.345678, 98.765432),
+  ('Søborg', 'Tårnvej 33', 2600, 'Copenhagen', 12.345678, 98.765432),
+  ('Hellerup', 'Onsgårdsvej 18', 2900, 'Copenhagen', 12.345678, 98.765432),
+  ('Glostrup', 'Naverland 4', 2600, 'Copenhagen', 12.345678, 98.765432);

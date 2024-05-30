@@ -229,7 +229,9 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
                     <Text style={styles.rewardTitle}>Reward points</Text>
                     <Text style={styles.rewardSubtitle}>
                       If you redeem {pointsToRedeem} points you can save{" "}
+                      <Text style={styles.detailText} >
                       {discount} kr.
+                      </Text>
                     </Text>
 
                     <View style={styles.row}>
@@ -397,6 +399,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     marginTop: 5,
+  },
+  detailText: {
+    color: "#0CEF78",
+    fontWeight: "bold"
   },
   rewardSubtitle: { color: "#fff", fontSize: 12, marginTop: 5 },
   subtotal: { color: "#fff", fontWeight: "bold", fontSize: 17 },
