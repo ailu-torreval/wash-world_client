@@ -33,8 +33,6 @@ const MainNavigation: React.FC = () => {
           } else if (route.name === "Profile") {
             iconName = "account";
           }
-
-          // You can return any component that you like here!
           return <MaterialIcon  name={iconName || "home"} size={size +8} color={color} />;
         },
         tabBarActiveTintColor: "#0DCC70",

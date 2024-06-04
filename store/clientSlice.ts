@@ -135,7 +135,7 @@ const clientSlice = createSlice({
         state.error = action.payload as string;
       })
       .addCase(invoiceCreated, (state, action) => {
-        // Update the reward_points_balance
+
         console.log("update client", action.payload);
         if (state.client && action.payload.client !== undefined) {
           state.client.reward_points_balance =
@@ -152,26 +152,8 @@ const clientSlice = createSlice({
             id: action.payload.id,
           };
 
-          // Add the new invoice to the invoices array
           state.client.invoices.push(newInvoice);
           console.log("138", action.payload.client);
-
-          //     // Transform the response to match the shape of client.invoices
-
-          // // Transform the response to match the shape of client.invoices
-          // const newInvoice = {
-          //   venue: action.payload.venue,
-          //   extras: action.payload.extras,
-          //   date: action.payload.date,
-          //   total_amount: action.payload.total_amount,
-          //   points_earned: action.payload.points_earned,
-          //   washType: action.payload.washType,
-          //   points_redeemed: action.payload.points_redeemed,
-          //   id: action.payload.id
-          // };
-
-          // // Add the new invoice to the invoices array
-          // state.client.invoices.push(newInvoice);
         }
       })
       .addCase(logout.fulfilled, (state) => {
