@@ -36,10 +36,10 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
   const [totalAmount, setTotalAmount] = useState<number>(20);
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const [cardDetails, setCardDetails] = useState<CardDetails>({
-    cardNr: "12345",
+    cardNr: "1234 1234 1234 1234",
     expiration: "10/28",
-    cardName: "ailin",
-    cvv: "123",
+    cardName: "ailin torre val",
+    cvv: "",
   });
 
   useEffect(() => {
@@ -161,7 +161,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
         await dispatch(createInvoice());
         Alert.alert(
           "Payment Accepted!",
-          "Just relax now and we will take it from here.",
+          `You earned ${invoice.points_earned}★`,
           [
             {
               text: "Back to Home",

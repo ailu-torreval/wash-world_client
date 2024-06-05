@@ -93,6 +93,8 @@ const SignupScreen: React.FC = () => {
       if(client.role === 'admin') {
         setIsAdmin(true)
       }
+    } else {
+      Alert.alert("Something went wrong", "Try another email.")
     }
 
     }
